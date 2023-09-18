@@ -59,11 +59,10 @@ namespace _01Clases
 			set { _plataforma = value; }
 		}
 
-      
-
-
-
-
+        public override string ToString()
+        {
+            return $"Titulo: {titulo}, Año: {anno}, Genero: {Genero}, Plataforma: {Plataforma}" + '\n';
+        }
 
 
     }
