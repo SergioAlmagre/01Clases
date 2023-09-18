@@ -118,7 +118,6 @@ namespace _01Clases
                                 if (dates[0] < dates[1])
                                 {
                                     Console.WriteLine("La primera fecha es mayor");
-
                                 }
                                 else if (dates[0] > dates[1])
                                 {
@@ -137,7 +136,6 @@ namespace _01Clases
                                 date1 = Convert.ToDateTime(dateString1);
                                 Console.WriteLine(date1.ToString("D"));
                             }
-
 
                             break;
 
@@ -164,12 +162,12 @@ namespace _01Clases
                                     switch (nSelection)
                                     {
                                         case 1:
-                                            Console.WriteLine("Introduce el núevo titulo");
+                                            Console.WriteLine("Introduce el núevo titulo " + '\n');
                                             newJuego.titulo = Console.ReadLine();
                                             
                                         break;
                                         case 2:
-                                            Console.WriteLine("Introduce el núevo año");
+                                            Console.WriteLine("Introduce el núevo año " + '\n');
                                             newJuego.anno = checkNumberMenu(1800, 3000);
                                             
                                             break;
@@ -184,19 +182,16 @@ namespace _01Clases
                                         break;
                                     }
 
-
                                     break;
                                 case 4:
-                                    // eliminarJuego();
+
+                                    eliminarJuego(buscarJuego());
                                     break;
                             }
-
-
                             break;
 
                         case 3:
                             Console.WriteLine("Caso 3");
-
                             break;
 
                         case 4:
@@ -231,29 +226,6 @@ namespace _01Clases
             return dates;
         }
 
-        /*
-        static void menu1(int minMenu, int maxMenu)
-        {
-            do
-            {
-                Console.WriteLine(
-                "    Manejor de fechas        " + '\n' +
-                "---------------------" + '\n' +
-                "1 - Conoce el día de la semana mediante una fecha " + '\n' +
-                "2 - Conoce que día será dentro del Nº de días " + '\n' +
-                "3 - Conoce la diferencia entre dos fechas " + '\n' +
-                "4 - Compara entre dos fechas para conocer si es mayor o menor " + '\n' +
-                "5 - Mostrar fecha en formato largo" + '\n' +
-                "                    " + '\n' +
-                "Seleccione una opción");
-
-
-                selection = Console.ReadLine();
-                correct = int.TryParse(selection, out nSelection);
-            } while (nSelection < minMenu || nSelection > maxMenu);
-        }
-        */
-
         static void menu1()
         {
             Console.WriteLine(
@@ -280,14 +252,23 @@ namespace _01Clases
             "                    " + '\n');
         }
 
+        static void menuModificarJuego()
+        {
+            Console.WriteLine("¿Que deseas modificar" + '\n');
+            Console.WriteLine("_____________________" + '\n');
+            Console.WriteLine("1 - Titulo" + '\n');
+            Console.WriteLine("2 - Año de lanzamiento" + '\n');
+            Console.WriteLine("3 - Genero" + '\n');
+            Console.WriteLine("4 - Plataforma" + '\n');
+        }
+
         static void insertarJuego()
         {
 
             Console.WriteLine("Introduce el titulo del juego" + '\n');
             juego.titulo = Console.ReadLine();
-            Console.WriteLine("Introduce el año de publicacion");
+            Console.WriteLine("Introduce el año de publicacion" + '\n');
             juego.anno = checkNumberMenu(1800, 3000);
-            
 
             menuGenero();
             menuPlataforma();
@@ -321,25 +302,7 @@ namespace _01Clases
             }
         }
 
-        static void modificarJuego(String titulo)
-        {
 
-
-
-            Juego newJuego = new Juego();
-           
-
-        }
-
-        static void menuModificarJuego()
-        {
-            Console.WriteLine("¿Que deseas modificar" + '\n');
-            Console.WriteLine("_____________________" + '\n');
-            Console.WriteLine("1 - Titulo" + '\n');
-            Console.WriteLine("2 - Año de lanzamiento" + '\n');
-            Console.WriteLine("3 - Genero" + '\n');
-            Console.WriteLine("4 - Plataforma" + '\n');
-        }
 
         static void menuGenero()
         {
@@ -401,23 +364,44 @@ namespace _01Clases
         static Juego buscarJuego()
         {
             Juego game = new Juego();
+            ArrayList juegos = new ArrayList();
 
             Console.WriteLine("Primero introduce el título del juego que quieras modificar");
             string titulo = Console.ReadLine();
 
             foreach (Juego gameS in shelving)
             {
-                if (titulo == gameS.titulo)
+                if (gameS.titulo.Contains(titulo))
                 {
                     game = gameS;
+                    juegos.Add(game);
                 }
             }
-            Console.WriteLine("Introduce el titulo del juego" + '\n');
+
+
+            Console.WriteLine("Se han encontrado los siguientes juegos que contienen el titulo " + titulo + '\n');
+            int index = 0;
+
+            foreach(Juego gameS in juegos)
+            {
+                Console.WriteLine(index + " - " + gameS.titulo + '\n');
+                index++;
+            }
+            if (juegos.Count == 0)
+            {
+                Console.WriteLine("No se ha encontrado ningún juego que contenga el titulo " + titulo + '\n');
+            }
+            else
+            {
+                Console.WriteLine("Seleccione numéricamente cual es su opción");
+                game = (Juego)juegos[checkNumberMenu(0, juegos.Count)];
+            }
             return game;    
         }
 
-
-
+        static void eliminarJuego(Juego game)
+        {
+           shelving.Remove(game);
+        }
     }
-  
 }
