@@ -10,7 +10,12 @@ namespace _01Clases
     {
 		private int mast;
 
-        public Sailboat(string plate, string boatLength, int year, int mast) : base(plate, boatLength, year)
+        public Sailboat()
+        {
+
+        }
+
+        public Sailboat(string plate, int boatLength, int year, int mast) : base(plate, boatLength, year)
         {
             this.mast = mast;
         }
@@ -24,6 +29,12 @@ namespace _01Clases
         public override string ToString()
         {
             return base.ToString();
+        }
+
+        public override int module(int price)
+        {
+            int total = (this.boatLength * price) + mast;
+            return total;
         }
 
 

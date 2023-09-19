@@ -8,8 +8,12 @@ namespace _01Clases
 {
     internal class Rent
     {
-
         private string nameCustomer ;
+        private string dniCustomer;
+        private DateTime dateInit;
+        private DateTime dateEnd;
+        private string position;
+        private Ship shipN;
 
         public string Namecustomer
         {
@@ -17,39 +21,34 @@ namespace _01Clases
             set { nameCustomer = value; }
         }
 
-        private string dniCustomer;
-
+        
         public string dnicustomer
         {
             get { return dniCustomer; }
             set { dniCustomer = value; }
         }
 
-        private DateTime dateInit;
-
+        
         public DateTime DateInit
         {
             get { return dateInit; }
             set { dateInit = value; }
         }
 
-        private DateTime dateEnd;
-
+        
         public DateTime DateEnd
         {
             get { return dateEnd; }
             set { dateEnd = value; }
         }
 
-        private string position;
-
+        
         public string Position
         {
             get { return position; }
             set { position = value; }
         }
-
-        private Ship shipN;
+                
 
         public Ship ShipN
         {
@@ -72,6 +71,14 @@ namespace _01Clases
         public override string ToString()
         {
             return base.ToString();
+        }
+
+        public int calculateTotalRent(int modulo)
+        {
+            TimeSpan daysRent = this.dateEnd - this.dateInit;
+            int difference = (int)daysRent.TotalDays;
+            int total = difference * modulo;
+            return total;
         }
 
 

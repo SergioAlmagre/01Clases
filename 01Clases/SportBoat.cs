@@ -11,7 +11,7 @@ namespace _01Clases
 
 		private int power;
 
-        public SportBoat(string plate, string boatLength, int year, int power) : base(plate, boatLength, year)
+        public SportBoat(string plate, int boatLength, int year, int power) : base(plate, boatLength, year)
         {
             this.power = power;
         }
@@ -25,6 +25,12 @@ namespace _01Clases
         public override string ToString()
         {
             return base.ToString();
+        }
+
+        public override int module(int price)
+        {
+            int total = this.boatLength * price + power;
+            return total;
         }
 
 

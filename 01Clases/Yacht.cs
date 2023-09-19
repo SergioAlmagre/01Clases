@@ -11,7 +11,7 @@ namespace _01Clases
 		private int power;
 		private int nCabin;
 
-        public yacht(string plate, string boatLength, int year, int power, int nCabin) : base(plate, boatLength, year)
+        public yacht(string plate, int boatLength, int year, int power, int nCabin) : base(plate, boatLength, year)
         {
 			this.power = power;
 			this.nCabin = nCabin;
@@ -32,6 +32,12 @@ namespace _01Clases
         public override string ToString()
         {
             return base.ToString();
+        }
+
+        public override int module(int price)
+        {
+            int total = this.boatLength * price + power + nCabin;
+            return total;
         }
 
 

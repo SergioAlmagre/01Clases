@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,11 +10,16 @@ namespace _01Clases
 {
     internal class Ship
     {
-        public Ship(string plate, string boatLength, int year)
+        public Ship(string plate, int boatLength, int year)
         {
             this.plate = plate;
             this.boatLength = boatLength;
             this.year = year;
+        }
+
+        public Ship()
+        {
+
         }
 
         private string plate;
@@ -23,9 +30,9 @@ namespace _01Clases
             set { plate = value; }
         }
 
-        private string boatLength;
+        public int boatLength;
 
-        public string BoatLenght
+        public int BoatLenght
         {
             get { return boatLength; }
             set { boatLength = value; }
@@ -44,13 +51,15 @@ namespace _01Clases
             return $"Plate: {plate}, Boat Length: {boatLength}, Year: {year}";
         }
 
-        public static void Rent()
+        virtual public int module(int price)
         {
-
+            int total = this.boatLength * price;
+            return total;
         }
 
 
-
     }
+ 
+
 
 }

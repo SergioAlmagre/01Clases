@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Globalization;
+using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 
@@ -13,6 +14,10 @@ namespace _01Clases
         static int nSelection = 0;
         static Juego juego = new Juego();
         static ArrayList shelving = new ArrayList();
+        static List<Ship> allShips = new List<Ship>();
+        static ArrayList allRents = new ArrayList();
+        static int index = 1;
+        
 
         static void Main(string[] args)
         {
@@ -184,14 +189,86 @@ namespace _01Clases
 
                                     break;
                                 case 4:
-
                                     eliminarJuego(buscarJuego());
                                     break;
                             }
                             break;
 
                         case 3:
-                            Console.WriteLine("Caso 3");
+
+                            menuPuerto();
+                            switch (checkNumberMenu(1, 7))
+                            {
+                                case 1:
+                                   menuTipoBarco();
+                                    switch (checkNumberMenu(1,5))
+                                    {
+                                        case 1:
+                                            insertarBarcoNormal();  
+                                            break;
+                                        case 2:
+                                            insertarVelero();
+                                            break;
+                                        case 3:
+                                            insertarDeportivo();
+                                            break;
+                                        case 4:
+                                            insertarYate();
+                                            break;
+                                    }
+
+                                    break;
+                                case 2:
+                                    AlquilarBarco();
+
+                                    break;
+                                case 3:
+                                    mostrarTodosBarcos();
+
+                                    break;
+                                case 4:
+
+
+                                    break;
+                                case 5:
+
+
+                                    break;
+                                case 6:
+
+
+                                    break;
+                                case 7:
+
+
+
+                                    break;
+
+
+
+
+                            }
+
+
+                           /* Console.WriteLine("Juego de barcos");
+                            Sailboat chanqueteShip = new Sailboat("1564AD",20,1990,2);
+                            Ship chanqueteShip2 = new Ship("8554AD", 20, 1990);
+
+                            DateTime startDate = new DateTime(1991,06,20);
+                            DateTime endDate = new DateTime(1991,09,10);
+
+                            Rent rent1 = new Rent("Paco", "09884416", startDate, endDate, "A1", chanqueteShip);
+                            Rent rent2 = new Rent("Paco", "09884416", startDate, endDate, "A2", chanqueteShip2);
+
+                            int total = rent1.calculateTotalRent(rent1.ShipN.module(12));
+                            int total2 = rent1.calculateTotalRent(rent2.ShipN.module(12));
+                            
+                            Console.WriteLine(total);
+                            Console.WriteLine(total2);
+                           */
+
+
+
                             break;
 
                         case 4:
@@ -261,6 +338,126 @@ namespace _01Clases
             Console.WriteLine("3 - Genero" + '\n');
             Console.WriteLine("4 - Plataforma" + '\n');
         }
+
+        static void menuPuerto()
+        {
+            Console.WriteLine(
+            "    Que deseas hacer        " + '\n' +
+            "---------------------" + '\n' +
+            "1 - Registrar un barco " + '\n' +
+            "2 - Alquilar un barco " + '\n' +
+            "3 - Ver todos los barcos registrados " + '\n' +
+            "4 - Ver todos los barcos alquilados " + '\n' +
+            "5 - Imprimir valor del alquiler " + '\n' +
+            "6 - Eliminar un barci del registro" + '\n' +
+            "7 - Eliminar un alquiler del registro" + '\n' +
+            "                    " + '\n');
+        }
+
+        static void menuTipoBarco()
+        {
+            Console.WriteLine("¿Que tipo de barco es el tuyo?" + '\n');
+            Console.WriteLine("1 - Normal" + '\n');
+            Console.WriteLine("2 - Velero" + '\n');
+            Console.WriteLine("3 - Deportivo" + '\n');
+            Console.WriteLine("4 - Yate" + '\n');
+        }
+
+        static void insertarBarcoNormal()
+        {
+            Console.WriteLine("Introduce la matricula del barco");
+            string shipPlate = Console.ReadLine();
+            Console.WriteLine("Introduce la longitud en metros");
+            int longitudBarco = checkNumberMenu(1, 200);
+            Console.WriteLine("¿Cual es el año de matriculación?");
+            int annoMatricula = checkNumberMenu(1900, 2024);
+
+            Ship newNormalShip = new Ship(shipPlate,longitudBarco,annoMatricula);
+            allShips.Add(newNormalShip);
+        }
+
+        static void insertarVelero()
+        {
+            Console.WriteLine("Introduce la matricula del barco");
+            string shipPlate = Console.ReadLine();
+            Console.WriteLine("Introduce la longitud en metros");
+            int longitudBarco = checkNumberMenu(1, 200);
+            Console.WriteLine("¿Cual es el año de matriculación?");
+            int annoMatricula = checkNumberMenu(1900, 2024);
+            Console.WriteLine("Introduce el número de mástiles");
+            int nMastiles = checkNumberMenu(1, 20);
+
+            Sailboat newSailboat = new Sailboat(shipPlate, longitudBarco, annoMatricula,nMastiles);
+            allShips.Add(newSailboat);
+        }
+
+        static void insertarDeportivo()
+        {
+            Console.WriteLine("Introduce la matricula del barco");
+            string shipPlate = Console.ReadLine();
+            Console.WriteLine("Introduce la longitud en metros");
+            int longitudBarco = checkNumberMenu(1, 200);
+            Console.WriteLine("¿Cual es el año de matriculación?");
+            int annoMatricula = checkNumberMenu(1900, 2024);
+            Console.WriteLine("Introduce el número de mástiles");
+            int power = checkNumberMenu(1, 10000);
+
+            SportBoat newDeportivo = new SportBoat(shipPlate, longitudBarco, annoMatricula, power);
+            allShips.Add(newDeportivo);
+        }
+
+        static void insertarYate()
+        {
+            Console.WriteLine("Introduce la matricula del barco");
+            string shipPlate = Console.ReadLine();
+            Console.WriteLine("Introduce la longitud en metros");
+            int longitudBarco = checkNumberMenu(1, 200);
+            Console.WriteLine("¿Cual es el año de matriculación?");
+            int annoMatricula = checkNumberMenu(1900, 2024);
+            Console.WriteLine("Introduce el número de mástiles");
+            int power = checkNumberMenu(1, 10000);
+            Console.WriteLine("Introduce el número de camerinos");
+            int nCabin = checkNumberMenu(1, 100);
+
+            yacht newDeportivo = new yacht(shipPlate, longitudBarco, annoMatricula, power,nCabin);
+            allShips.Add(newDeportivo);
+        }
+
+        static void mostrarTodosBarcos()
+        {
+            foreach (Ship i in allShips) {
+                Console.WriteLine(i);
+            }
+        }
+
+        static void AlquilarBarco()
+        {
+
+            Console.WriteLine("Nombre del cliente");
+            string customerName = Console.ReadLine();
+            Console.WriteLine("DNI del cliente");
+            string IdCustomer = Console.ReadLine();
+            Console.WriteLine("Fecha de inicio del alquiler");
+            string dateStartRentST = Console.ReadLine();
+            DateTime dateStarRentDT = Convert.ToDateTime(dateStartRentST);
+            Console.WriteLine("Fecha de fin del alquiler");
+            string dateEndRentST = Console.ReadLine();
+            DateTime dateEndRentDT = Convert.ToDateTime(dateEndRentST);
+            
+            string positionShipRent = "A" + index.ToString();
+            index = index++;
+
+            // como añado un contador de este tipo pero en el constructor de una clase?
+
+            Ship newShip = buscarBarco();
+            Rent newRent = new Rent(customerName, IdCustomer, dateStarRentDT, dateEndRentDT, positionShipRent, newShip);
+
+        }
+
+
+
+
+
 
         static void insertarJuego()
         {
@@ -378,8 +575,7 @@ namespace _01Clases
                 }
             }
 
-
-            Console.WriteLine("Se han encontrado los siguientes juegos que contienen el titulo " + titulo + '\n');
+                Console.WriteLine("Se han encontrado los siguientes juegos que contienen el titulo " + titulo + '\n');
             int index = 0;
 
             foreach(Juego gameS in juegos)
@@ -398,6 +594,47 @@ namespace _01Clases
             }
             return game;    
         }
+
+
+
+        static Ship buscarBarco()
+        {
+            Ship shipN = new Ship();
+            ArrayList foundShips = new ArrayList();
+
+            Console.WriteLine("Introduce la matricula del barco que deseas alquilar");
+            string matricula = Console.ReadLine();
+
+            foreach (Ship shipS in allShips)
+            {
+                if (shipS.Plate.Contains(matricula))
+                {
+                    shipN = shipS;
+                    foundShips.Add(shipN);
+                }
+            }
+
+            Console.WriteLine("Se han encontrado los siguientes barcos que contienen la matricula " + matricula + '\n');
+            int index = 0;
+
+            foreach (Ship ShipS in foundShips)
+            {
+                Console.WriteLine(index + " - " + ShipS.Plate + '\n');
+                index++;
+            }
+            if (foundShips.Count == 0)
+            {
+                Console.WriteLine("No se ha encontrado ningún barco que contenga la matricula " + matricula + '\n');
+            }
+            else
+            {
+                Console.WriteLine("Seleccione numéricamente cual es su opción");
+                shipN = (Ship)foundShips[checkNumberMenu(0, foundShips.Count)];
+            }
+            return shipN;
+        }
+
+
 
         static void eliminarJuego(Juego game)
         {
